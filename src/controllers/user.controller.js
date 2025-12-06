@@ -1,4 +1,4 @@
-import {asyncHandler} from "../utils/asyncHandler";    //check if error here
+import {asyncHandler} from "../utils/asyncHandler.js";    //check if error here
 
 const registerUser = asyncHandler(async (req, res) => {
     res.status(200).json({

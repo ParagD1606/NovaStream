@@ -1,9 +1,9 @@
+import {ApiError} from './utils/ApiError.js';
 import express, { urlencoded } from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import { app } from './app.js';
 
-// const app = express();
+const app = express();
 
 app.use(cors({
     origin: process.env.CORS_ORIGIN,
@@ -24,5 +24,19 @@ app.use('/users', userRouter);
 
 //routes declaration
 app.use('/api/v1/users', userRouter);
+
+
+//error checking middleware
+app.use((err, req, res, next) => {
+    // If it's a known error, use its properties; otherwise, default to 500
+    const statusCode = err instanceof ApiError ? err.statusCode : 500;
+    const message = err.message || "Internal Server Error";
+
+    return res.status(statusCode).json({
+        success: false,
+        message,
+        errors: err.errors || []
+    });
+});
 
 export {app};
