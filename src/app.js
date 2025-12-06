@@ -1,8 +1,9 @@
 import express, { urlencoded } from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import { app } from './app.js';
 
-const app = express();
+// const app = express();
 
 app.use(cors({
     origin: process.env.CORS_ORIGIN,
@@ -16,12 +17,12 @@ app.use(cookieParser());
 
 //routes
 
-import userRoutes from './routes/user.routes.js';
+import userRouter from './routes/user.routes.js';
 
-app.use('/users', userRoutes);
+app.use('/users', userRouter);
 
 
 //routes declaration
-app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/users', userRouter);
 
 export {app};
